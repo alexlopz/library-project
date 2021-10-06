@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <iostream>
 
+using namespace std;
+
 /*
 author: Erick Jeronimo
 */
-
-using namespace std;
-
 void saveBook()
 {
 	//declare variables
