@@ -1,2 +1,4 @@
 a|a|a
 a|a|a
+Cancion de fuego|Danerys|200
+Cancion de Hielo|Danerys|100
