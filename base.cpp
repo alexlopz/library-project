@@ -50,6 +50,7 @@ int main(void){
 	cout << "INGRESA UNA OPCION POR FAVOR \n\n";
 	cout << "1) Registrar libros. \n";
 	cout << "2) Prestamos de libros. \n";
+	cout << "3) Limpiar pantalla. \n";
 	cout << "0) Salir \n";
 	cin >> option;
 	
@@ -61,9 +62,19 @@ int main(void){
 			case 2:
 				menuBookLoans();
 				break;
+				
+			case 3: 
+					system("cls");	
+					 return main();	
+					break;
+			case 0:
+					system("pause");
+	
 			default:
 				cout << "Opcion no registrada";
+				return main();
 				break;
+	
 		}	
 	}	
 }
@@ -71,6 +82,7 @@ int main(void){
 void menuBookLoans(){
 	int option;
 	cout << "1) Registar prestamo \n";
+	cout << "2) Mostrar libros prestados \n";
 	cout << "0) Regresar al menu principal \n";
 	cin >> option; 
 	
@@ -82,7 +94,7 @@ void menuBookLoans(){
 			main();
 			break;
 		default:
-			cout << "Error";
+			cout << "Error \n";
 			break;		
 	}
 	
