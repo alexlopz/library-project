@@ -1,4 +1,4 @@
-a|a|a
-a|a|a
-Cancion de fuego|Danerys|200
-Cancion de Hielo|Danerys|100
+
+1|Harry Potter|J.K. Rowling|1998
+2|El Alquimista|Paulo Coelho|2002
+3|Crepusculo|Stephanie Meyer|2005

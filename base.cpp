@@ -1,73 +1,108 @@
 #include <stdio.h>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
 /*
 authors: 
-	Erick Jeronimo
-	Francisco Alexander Lopez, Carné: 5190-13-5530
-	Juan Jose Castañeda Giron, carné: 5190-17-6503
+	Erick Ottoniel Jeronimo Toj, CarnÃ© 5190-16-18967
+	Francisco Alexander Lopez, Carnï¿½: 5190-13-5530
+	Juan Jose Castaï¿½eda Giron, carnï¿½: 5190-17-6503
 */
 
 void menuBookLoans();
 void registerBookLoan();
-void menusaveBook();
+void menuSaveBook();
 void saveBook();
+void principalMenuOptions(int option);
+void textPrincipalMenu();
+void menuBookLoansOptions(int option);
+void menuSaveBookOptions(int option);
+void showBooks();
+int validateUserResponse(int min, int max);
 
 int main(void){
+	textPrincipalMenu();
+	int option = validateUserResponse(0, 4);
+	principalMenuOptions(option);
+}
 
+int validateUserResponse(int min, int max){
 	int option;
-	
+	cin >> option;
+
+	while (!std::cin.good())
+	{
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		main();
+	}
+
+	while(option < min || option > max){
+		cout << "No ingresaste una opcion valida, Intenta de nuevo \n";
+		cin >> option;
+	}
+
+	cout << "Tu respuesta fue ";
+	cout << option;
+	cout << "\n";
+	return option;
+}
+
+void textPrincipalMenu(){
 	cout << "INGRESA UNA OPCION POR FAVOR \n\n";
 	cout << "1) Registros de libros. \n"; 
 	cout << "2) Prestamos de libros. \n";
 	cout << "3) Busqueda de Libros. \n";
 	cout << "4) Limpiar pantalla. \n";
 	cout << "0) Salir \n";
-	cin >> option;
-	
-	while(option != 0) {
+}
+
+void principalMenuOptions(int option){
 		switch(option){
 			case 1:
-				menusaveBook();
+				menuSaveBook();
 				break;
+
 			case 2:
 				menuBookLoans();
 				break;
-				
+
 			case 3:
-				
 				break;
 				
 			case 4: 
 					system("cls");	
-					 return main();	
+					main();	
 					break;
 			case 0:
-					system("pause");
+					exit(3);
 	
 			default:
 				cout << "Opcion no registrada \n";
-				return main();
+				main();
 				break;
 	
 		}	
-	}	
 }
-void menusaveBook(){
-	int option;
+
+
+void menuSaveBook(){
 	cout << "1) Registar libro \n";
 	cout << "2) Mostrar libros registrados \n";
 	cout << "0) Regresar al menu principal \n";
-	cin >> option; 
-	
+	int option = validateUserResponse(0, 2);
+	menuSaveBookOptions(option);
+}
+
+void menuSaveBookOptions(int option){
 	switch(option){
 		case 1:
 			saveBook();
 			break;
 		case 2:
-			
+			showBooks();
 			break;
 		
 		case 0:
@@ -76,12 +111,12 @@ void menusaveBook(){
 		default:
 			cout << "Error \n";
 			break;		
+	}	
 }
-}
+
 void saveBook(){
-{
 	//declare variables
-	int id;
+	char id[10];
 	char bookName[90];
 	char author[90];
 	char publishYear[90];
@@ -89,11 +124,16 @@ void saveBook(){
 
 	//ask for data
 	cout << "Registrar libro \n";
-	cout << "Escribe el nombre del libro \n";
+	cout << "Escribe el codigo del libro \n";
 	cin.ignore();
+	cin.getline(id, 10);
+
+	cout << "Escribe el nombre del libro \n";
 	cin.getline(bookName, 90);
+	
 	cout << "Escribe el autor del libro \n";
 	cin.getline(author, 90);
+
 	cout << "Escribe el anio de publicacion del libro \n";
 	cin >> publishYear;
 
@@ -102,29 +142,33 @@ void saveBook(){
 
 	//validate books exist
 	if (books != NULL) {
-	 	fprintf(books, "%s|%s|%s\n",bookName,author,publishYear);
+	 	fprintf(books, "%s|%s|%s|%s\n", id, bookName, author, publishYear);
 		fclose(books);
+		cout << "Registro guardado con exito!!!\n\n";
+		menuSaveBook();
 	}else{
 		cout << " Error al Abrir el archivo libros.txt ";
 	}
 }
+
+void showBooks(){
+
 }
 
-
-
 void menuBookLoans(){
-	int option;
 	cout << "1) Registar prestamo \n";
 	cout << "2) Mostrar libros prestados \n";
 	cout << "0) Regresar al menu principal \n";
-	cin >> option; 
-	
-	switch(option){
+	int option = validateUserResponse(0, 2);
+	menuBookLoansOptions(option);
+}
+
+void menuBookLoansOptions(int option){
+		switch(option){
 		case 1:
 			registerBookLoan();
 			break;
 		case 2:
-			
 			break;
 		
 		case 0:
@@ -134,7 +178,6 @@ void menuBookLoans(){
 			cout << "Error \n";
 			break;		
 	}
-	
 }
 
 void registerBookLoan() {
@@ -177,6 +220,7 @@ void registerBookLoan() {
 		fclose(loans);
 		
 		cout << "Registro guardado con exito!!!\n\n";
+		menuBookLoans();
 		
 	} else {//Error message if the file does not exist or is corrupted
 		cout << " Error al abrir el archivo prestamos.txt ";
