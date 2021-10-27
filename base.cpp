@@ -6,9 +6,79 @@ using namespace std;
 /*
 authors: 
 	Erick Jeronimo
-	Francisco Alexander Lopez, Carné: 5190-135530
+	Francisco Alexander Lopez, Carné: 5190-13-5530
+	Juan Jose Castañeda Giron, carné: 5190-17-6503
 */
-void saveBook()
+
+void menuBookLoans();
+void registerBookLoan();
+void menusaveBook();
+void saveBook();
+
+int main(void){
+
+	int option;
+	
+	cout << "INGRESA UNA OPCION POR FAVOR \n\n";
+	cout << "1) Registros de libros. \n"; 
+	cout << "2) Prestamos de libros. \n";
+	cout << "3) Busqueda de Libros. \n";
+	cout << "4) Limpiar pantalla. \n";
+	cout << "0) Salir \n";
+	cin >> option;
+	
+	while(option != 0) {
+		switch(option){
+			case 1:
+				menusaveBook();
+				break;
+			case 2:
+				menuBookLoans();
+				break;
+				
+			case 3:
+				
+				break;
+				
+			case 4: 
+					system("cls");	
+					 return main();	
+					break;
+			case 0:
+					system("pause");
+	
+			default:
+				cout << "Opcion no registrada \n";
+				return main();
+				break;
+	
+		}	
+	}	
+}
+void menusaveBook(){
+	int option;
+	cout << "1) Registar libro \n";
+	cout << "2) Mostrar libros registrados \n";
+	cout << "0) Regresar al menu principal \n";
+	cin >> option; 
+	
+	switch(option){
+		case 1:
+			saveBook();
+			break;
+		case 2:
+			
+			break;
+		
+		case 0:
+			main();
+			break;
+		default:
+			cout << "Error \n";
+			break;		
+}
+}
+void saveBook(){
 {
 	//declare variables
 	int id;
@@ -18,7 +88,7 @@ void saveBook()
 	FILE *books;
 
 	//ask for data
-	cout << "Registrar libro";
+	cout << "Registrar libro \n";
 	cout << "Escribe el nombre del libro \n";
 	cin.ignore();
 	cin.getline(bookName, 90);
@@ -37,47 +107,10 @@ void saveBook()
 	}else{
 		cout << " Error al Abrir el archivo libros.txt ";
 	}
-
+}
 }
 
-void menuBookLoans();
-void registerBookLoan();
 
-int main(void){
-
-	int option;
-	
-	cout << "INGRESA UNA OPCION POR FAVOR \n\n";
-	cout << "1) Registrar libros. \n";
-	cout << "2) Prestamos de libros. \n";
-	cout << "3) Limpiar pantalla. \n";
-	cout << "0) Salir \n";
-	cin >> option;
-	
-	while(option != 0) {
-		switch(option){
-			case 1:
-				saveBook();
-				break;
-			case 2:
-				menuBookLoans();
-				break;
-				
-			case 3: 
-					system("cls");	
-					 return main();	
-					break;
-			case 0:
-					system("pause");
-	
-			default:
-				cout << "Opcion no registrada";
-				return main();
-				break;
-	
-		}	
-	}	
-}
 
 void menuBookLoans(){
 	int option;
@@ -90,6 +123,10 @@ void menuBookLoans(){
 		case 1:
 			registerBookLoan();
 			break;
+		case 2:
+			
+			break;
+		
 		case 0:
 			main();
 			break;
@@ -148,5 +185,6 @@ void registerBookLoan() {
 	return;	
  	
 }
+
 
 
