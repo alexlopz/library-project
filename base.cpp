@@ -5,7 +5,7 @@
 #include <limits>
 #include <string.h>
 #include <windows.h>
-
+#include <fstream>
 
 using namespace std;
 
@@ -27,15 +27,9 @@ void menuBookLoans();
 void saveBookLoan();
 void menuSaveBookOptions(int option);
 void showBooksLoans();
+void searchBook();
+void validateLoan(string query);
 
-void gotoxy(int x,int y){
-	HANDLE hcon;
-	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
-	dwPos.X= x;
-	dwPos.Y= y;
-	SetConsoleCursorPosition(hcon,dwPos);
-}
 
 int main(void){
 	textPrincipalMenu();
@@ -66,7 +60,7 @@ int validateUserResponse(int min, int max){
 }
 
 void textPrincipalMenu(){
-	cout << "INGRESA UNA OPCION POR FAVOR \n\n";
+	cout << "\n\nINGRESA UNA OPCION POR FAVOR \n\n";
 	cout << "1) Registros de libros. \n"; 
 	cout << "2) Prestamos de libros. \n";
 	cout << "3) Busqueda de Libros. \n";
@@ -85,7 +79,7 @@ void principalMenuOptions(int option){
 				break;
 
 			case 3:
-				
+				searchBook();
 				break;
 				
 			case 4: 
@@ -131,7 +125,7 @@ void menuSaveBookOptions(int option){
 
 void saveBook(){
 	//declare variables
-	char id[10];
+	char id[5];
 	char bookName[90];
 	char author[90];
 	char publishYear[90];
@@ -141,7 +135,7 @@ void saveBook(){
 	cout << "Registrar libro \n";
 	cout << "Escribe el codigo del libro \n";
 	cin.ignore();
-	cin.getline(id, 10);
+	cin.getline(id, 5);
 
 	cout << "Escribe el nombre del libro \n";
 	cin.getline(bookName, 90);
@@ -224,7 +218,7 @@ void saveBookLoan() {
 	
 	//declare variables
 	FILE *loans;
- 	char bookCode[8];
+ 	char bookCode[5];
  	char loanDate[16];
  	char returDate[16];
  	char userName[128];
@@ -241,7 +235,7 @@ void saveBookLoan() {
 		
 		cout << "Escribe el codigo del libro por favor:\n";
 		cin.ignore();
-		cin.getline(bookCode, 8);
+		cin.getline(bookCode, 5);
 		
 		cout << "Escribe la fecha del prestamo ejemplo: 01/01/2021 \n";
 		cin.getline(loanDate, 16);
@@ -299,7 +293,68 @@ void showBooksLoans(){
 	}
 }
 
+void searchBook(){
+	
+	string line;
+	string query; 
+	
+	cout << "Busqueda de libros \n\n";
+	cout << "Codigo del libro a buscar: " << endl;
+	cin.ignore();
+	cin >> query;
+	
+	ifstream  books("./libros.txt");
 
+ 	while(getline(books, line)){
+ 		
+ 		int position = line.find(query);
+ 		
+ 		if(position!=string::npos){
+			int indexCod = 	line.find("|");
+			int indexNam = line.find("|", indexCod + 1);
+			
+			cout << "Resultado: \n\n";
+			cout << "Nombre libro: ";
+			for(int i = indexCod+1; i < indexNam; i++ ){
+				putchar(line[i]);
+			}
+			
+			validateLoan(query);
+			 			
+		 }
+ 		
+	 }
+	 
+	main();	//muestra el menu	
+}
+
+void validateLoan(string query){
+	string lineLoans;
+			
+	ifstream  loans("./prestamos.txt");
+ 
+	 while(getline(loans, lineLoans)){
+	 
+	 	int indexLoans = lineLoans.find(query);//se busca el codigo 
+	 	
+	 	if(indexLoans!=string::npos){//si existe el codigo se imprime la fecha de prestamo y nombre a quien se presto
+	 		int indexCod = 	lineLoans.find("|");
+			int indexDate = lineLoans.find("|", indexCod+1);
+			int indexDev = lineLoans.find("|", indexDate+1);
+			int indexName = lineLoans.find("|", indexDev+1);
+			
+	 		cout << "\nFecha Prestamo: ";
+	 		for(int i = indexCod+1; i < indexDate; i++ ){
+				putchar(lineLoans[i]);
+			}
+			
+ 			cout << "\nPrestado a: ";
+	 		for(int i = indexDev+1; i < indexName; i++ ){
+				putchar(lineLoans[i]);
+			}					
+		 }
+	 }	
+}
 
 
 
