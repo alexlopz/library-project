@@ -2,3 +2,5 @@
 1|Harry Potter|J.K. Rowling|1998
 2|El Alquimista|Paulo Coelho|2002
 3|Crepusculo|Stephanie Meyer|2005
+4|Principito|Anonimo|1999
+5|El chavo|Chespirito|2010

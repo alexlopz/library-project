@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
+#include <stdexcept>
+#include <limits>
+#include <string.h>
+#include <windows.h>
+
 
 using namespace std;
 
@@ -11,16 +16,26 @@ authors:
 	Juan Jose Casta�eda Giron, carn�: 5190-17-6503
 */
 
-void menuBookLoans();
-void registerBookLoan();
-void menuSaveBook();
-void saveBook();
-void principalMenuOptions(int option);
 void textPrincipalMenu();
-void menuBookLoansOptions(int option);
-void menuSaveBookOptions(int option);
-void showBooks();
+void principalMenuOptions(int option);
 int validateUserResponse(int min, int max);
+void menuSaveBook();
+void menuBookLoansOptions(int option);
+void saveBook();
+void showBooks();
+void menuBookLoans();
+void saveBookLoan();
+void menuSaveBookOptions(int option);
+void showBooksLoans();
+
+void gotoxy(int x,int y){
+	HANDLE hcon;
+	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD dwPos;
+	dwPos.X= x;
+	dwPos.Y= y;
+	SetConsoleCursorPosition(hcon,dwPos);
+}
 
 int main(void){
 	textPrincipalMenu();
@@ -46,7 +61,7 @@ int validateUserResponse(int min, int max){
 
 	cout << "Tu respuesta fue ";
 	cout << option;
-	cout << "\n";
+	cout << "\n\n";
 	return option;
 }
 
@@ -70,6 +85,7 @@ void principalMenuOptions(int option){
 				break;
 
 			case 3:
+				
 				break;
 				
 			case 4: 
@@ -87,9 +103,8 @@ void principalMenuOptions(int option){
 		}	
 }
 
-
 void menuSaveBook(){
-	cout << "1) Registar libro \n";
+	cout << "\n1) Registar libro \n";
 	cout << "2) Mostrar libros registrados \n";
 	cout << "0) Regresar al menu principal \n";
 	int option = validateUserResponse(0, 2);
@@ -152,11 +167,36 @@ void saveBook(){
 }
 
 void showBooks(){
+	FILE *books;
+	char line[256];
+	
+ 	books= fopen("./libros.txt", "r"); 
 
+	cout << "Listado de libros \n";
+ 	if (books != NULL) {
+   		while (!feof(books)) {
+     		if (!feof(books)) {
+     			*line = 0;
+     			fgets(line, 256, books);
+     			     			
+	 			for(int i = 0; i < strlen(line);i++){
+	 				if(line[i] == '|'){
+	        			putchar(' ');
+					} else {
+						putchar(line[i]);
+					}
+	    		}
+   			}
+		}
+	   fclose(books);
+	   menuSaveBook();
+	}else{
+		cout << " Error al Abrir el archivo libros.txt  ";
+	}	
 }
 
 void menuBookLoans(){
-	cout << "1) Registar prestamo \n";
+	cout << "\n1) Registar prestamo \n";
 	cout << "2) Mostrar libros prestados \n";
 	cout << "0) Regresar al menu principal \n";
 	int option = validateUserResponse(0, 2);
@@ -166,11 +206,11 @@ void menuBookLoans(){
 void menuBookLoansOptions(int option){
 		switch(option){
 		case 1:
-			registerBookLoan();
+			saveBookLoan();
 			break;
 		case 2:
+			showBooksLoans();
 			break;
-		
 		case 0:
 			main();
 			break;
@@ -180,7 +220,7 @@ void menuBookLoansOptions(int option){
 	}
 }
 
-void registerBookLoan() {
+void saveBookLoan() {
 	
 	//declare variables
 	FILE *loans;
@@ -229,6 +269,37 @@ void registerBookLoan() {
 	return;	
  	
 }
+
+void showBooksLoans(){
+	FILE *loans;
+	char line[256];
+	
+ 	loans= fopen("./prestamos.txt", "r"); 
+
+	cout << "Listado de prestamos de libros \n\n";
+ 	if (loans != NULL) {
+   		while (!feof(loans)) {
+     		if (!feof(loans)) {
+     			*line = 0;
+     			fgets(line, 256, loans);
+     			     			
+	 			for(int i = 0; i < strlen(line);i++){
+	 				if(line[i] == '|'){
+	        			putchar(' ');
+					} else {
+						putchar(line[i]);
+					}
+	    		}
+   			}
+		}
+	   fclose(loans);
+	   menuBookLoans();
+	}else{
+		cout << " Error al Abrir el archivo libros.txt  ";
+	}
+}
+
+
 
 
 
