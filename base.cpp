@@ -16,6 +16,7 @@ authors:
 	Juan Jose Casta�eda Giron, carn�: 5190-17-6503
 */
 
+//fuctions references
 void textPrincipalMenu();
 void principalMenuOptions(int option);
 int validateUserResponse(int min, int max);
@@ -31,9 +32,12 @@ void searchBook();
 void validateLoan(string query);
 
 
+//main fuction
 int main(void){
+	//text for main menu
 	textPrincipalMenu();
 	int option = validateUserResponse(0, 4);
+	//menu options fuctions
 	principalMenuOptions(option);
 }
 
@@ -161,19 +165,21 @@ void saveBook(){
 }
 
 void showBooks(){
+	//declare variales
 	FILE *books;
 	char line[256];
 	
+	// asign path file 
  	books= fopen("./libros.txt", "r"); 
 
 	cout << "Listado de libros \n";
- 	if (books != NULL) {
+ 	if (books != NULL) {// file validation
    		while (!feof(books)) {
      		if (!feof(books)) {
      			*line = 0;
      			fgets(line, 256, books);
      			     			
-	 			for(int i = 0; i < strlen(line);i++){
+	 			for(int i = 0; i < strlen(line);i++){//print books
 	 				if(line[i] == '|'){
 	        			putchar(' ');
 					} else {
@@ -182,8 +188,8 @@ void showBooks(){
 	    		}
    			}
 		}
-	   fclose(books);
-	   menuSaveBook();
+	   fclose(books);//close file
+	   menuSaveBook();//return book menu
 	}else{
 		cout << " Error al Abrir el archivo libros.txt  ";
 	}	
@@ -265,9 +271,12 @@ void saveBookLoan() {
 }
 
 void showBooksLoans(){
+
+	//declare variables
 	FILE *loans;
 	char line[256];
 	
+	//file path
  	loans= fopen("./prestamos.txt", "r"); 
 
 	cout << "Listado de prestamos de libros \n\n";
@@ -277,7 +286,7 @@ void showBooksLoans(){
      			*line = 0;
      			fgets(line, 256, loans);
      			     			
-	 			for(int i = 0; i < strlen(line);i++){
+	 			for(int i = 0; i < strlen(line);i++){//print loans
 	 				if(line[i] == '|'){
 	        			putchar(' ');
 					} else {
@@ -295,6 +304,7 @@ void showBooksLoans(){
 
 void searchBook(){
 	
+	//declare variables
 	string line;
 	string query; 
 	
@@ -303,6 +313,7 @@ void searchBook(){
 	cin.ignore();
 	cin >> query;
 	
+	//variable tipe strema
 	ifstream  books("./libros.txt");
 
  	while(getline(books, line)){
