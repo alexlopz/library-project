@@ -14,6 +14,7 @@ authors:
 	Erick Ottoniel Jeronimo Toj, Carné 5190-16-18967
 	Francisco Alexander Lopez, Carn�: 5190-13-5530
 	Juan Jose Casta�eda Giron, carn�: 5190-17-6503
+	Oscar Enrique Cardona González, carne: 5190 20 24444
 */
 
 //fuctions references
